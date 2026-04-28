@@ -14,17 +14,17 @@
   const photos = [
     {
       title: "Noah 01",
-      src: "assets/photos/generated/photo01.jpg",
+      src: "assets/photos/generated/photo01.JPG",
       frameColor: framePalette[0],
     },
     {
       title: "Noah 02",
-      src: "assets/photos/generated/photo02.jpg",
+      src: "assets/photos/generated/photo02.JPG",
       frameColor: framePalette[1],
     },
     {
       title: "Noah 03",
-      src: "assets/photos/generated/photo03.jpg",
+      src: "assets/photos/generated/photo03.JPG",
       frameColor: framePalette[2],
     },
     {
