@@ -159,21 +159,25 @@
     },
 
     setupDesktopPreviewPlacement() {
-      if (!this.isDesktopPreview || !this.desktopConfig.autoPlace) {
+      const isAutoPlace = this.isDesktopPreview ? this.desktopConfig.autoPlace : this.config.placement.autoPlace;
+      
+      if (!isAutoPlace) {
         return;
       }
 
-      this.updatePrompt(this.config.ui.desktopPrompt || this.config.ui.prompt, true);
-      this.setStatus(this.desktopIdleStatus);
+      if (this.isDesktopPreview) {
+        this.updatePrompt(this.config.ui.desktopPrompt || this.config.ui.prompt, true);
+        this.setStatus(this.desktopIdleStatus);
+      }
 
       const placeWhenReady = () => {
         if (this.hasPlacedGallery || this.isRevealing) {
           return;
         }
 
-        const groundY = Number.isFinite(this.desktopConfig.autoPlaceGroundY)
-          ? this.desktopConfig.autoPlaceGroundY
-          : -0.5;
+        const groundY = this.isDesktopPreview
+          ? (Number.isFinite(this.desktopConfig.autoPlaceGroundY) ? this.desktopConfig.autoPlaceGroundY : -0.5)
+          : (Number.isFinite(this.config.placement.autoPlaceGroundY) ? this.config.placement.autoPlaceGroundY : 0);
         this.placeGallery(groundY);
       };
 
