@@ -29,47 +29,47 @@
     },
     {
       title: "Noah 04",
-      src: "assets/photos/generated/photo04.svg",
+      src: "assets/photos/generated/photo04.png",
       frameColor: framePalette[3],
     },
     {
       title: "Noah 05",
-      src: "assets/photos/generated/photo05.svg",
+      src: "assets/photos/generated/photo05.png",
       frameColor: framePalette[4],
     },
     {
       title: "Noah 06",
-      src: "assets/photos/generated/photo06.svg",
+      src: "assets/photos/generated/photo06.png",
       frameColor: framePalette[5],
     },
     {
       title: "Noah 07",
-      src: "assets/photos/generated/photo07.svg",
+      src: "assets/photos/generated/photo07.png",
       frameColor: framePalette[0],
     },
     {
       title: "Noah 08",
-      src: "assets/photos/generated/photo08.svg",
+      src: "assets/photos/generated/photo08.png",
       frameColor: framePalette[1],
     },
     {
       title: "Noah 09",
-      src: "assets/photos/generated/photo09.svg",
+      src: "assets/photos/generated/photo09.png",
       frameColor: framePalette[2],
     },
     {
       title: "Noah 10",
-      src: "assets/photos/generated/photo10.svg",
+      src: "assets/photos/generated/photo10.png",
       frameColor: framePalette[3],
     },
     {
       title: "Noah 11",
-      src: "assets/photos/generated/photo11.svg",
+      src: "assets/photos/generated/photo11.png",
       frameColor: framePalette[4],
     },
     {
       title: "Noah 12",
-      src: "assets/photos/generated/photo12.svg",
+      src: "assets/photos/generated/photo12.png",
       frameColor: framePalette[5],
     },
   ];
