@@ -1,0 +1,201 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: "Noto Sans TC", "Segoe UI", sans-serif;
+}
+
+:root {
+  --ink: #1f2430;
+  --hud-bg-start: rgba(255, 248, 231, 0.93);
+  --hud-bg-end: rgba(255, 232, 198, 0.9);
+  --hud-border: rgba(140, 92, 48, 0.36);
+  --hud-shadow: rgba(27, 35, 52, 0.2);
+  --accent-1: #ffad60;
+  --accent-2: #ffd177;
+  --accent-3: #8f5d2b;
+  --status: #4f586b;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body::before {
+  inset: -20% auto auto -10%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle at center, rgba(255, 174, 101, 0.18), rgba(255, 174, 101, 0));
+  filter: blur(4px);
+}
+
+body::after {
+  inset: auto -8% 18% auto;
+  width: 290px;
+  height: 290px;
+  background: radial-gradient(circle at center, rgba(117, 212, 255, 0.2), rgba(117, 212, 255, 0));
+  filter: blur(6px);
+}
+
+.reveal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  color: #fff8ee;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(255, 167, 98, 0.35), rgba(255, 167, 98, 0)),
+    radial-gradient(circle at 80% 70%, rgba(122, 203, 255, 0.35), rgba(122, 203, 255, 0)),
+    rgba(22, 29, 41, 0.62);
+  backdrop-filter: blur(8px);
+  transition: opacity 240ms ease;
+}
+
+.reveal-overlay--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reveal-overlay__title {
+  font-family: "Baloo 2", "Noto Sans TC", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 20px;
+}
+
+.reveal-overlay__count {
+  font-family: "Baloo 2", "Noto Sans TC", sans-serif;
+  font-size: clamp(70px, 18vw, 140px);
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 0 24px rgba(255, 209, 121, 0.45);
+  animation: countdownPulse 900ms ease-in-out infinite;
+}
+
+.reveal-overlay__label {
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+}
+
+@keyframes countdownPulse {
+  0% {
+    transform: scale(0.86);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.hud {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  width: min(92vw, 560px);
+  color: var(--ink);
+  background: linear-gradient(135deg, var(--hud-bg-start), var(--hud-bg-end));
+  border: 1px solid var(--hud-border);
+  border-radius: 18px;
+  box-shadow: 0 10px 34px var(--hud-shadow);
+  padding: 12px 14px;
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+}
+
+.hud::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -50% auto;
+  width: 190px;
+  height: 190px;
+  border-radius: 999px;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.hud__badge {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-family: "Baloo 2", "Noto Sans TC", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(169, 115, 61, 0.32);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.hud__prompt {
+  position: relative;
+  z-index: 1;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.hud__status {
+  position: relative;
+  z-index: 1;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--status);
+  min-height: 1.2em;
+}
+
+.hud__controls {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #1b1f2b;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  box-shadow: 0 3px 12px rgba(63, 45, 17, 0.22);
+}
+
+button:active {
+  transform: translateY(1px) scale(0.995);
+}
+
+@media (max-width: 560px) {
+  .hud {
+    bottom: 12px;
+    border-radius: 14px;
+  }
+
+  .hud__prompt {
+    font-size: 13px;
+  }
+
+  .hud__controls {
+    grid-template-columns: 1fr;
+  }
+}
