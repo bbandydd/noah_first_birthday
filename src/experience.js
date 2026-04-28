@@ -18,7 +18,7 @@
 
   AFRAME.registerComponent("media-card-interaction", {
     schema: {
-      kind: {default: "photo"},
+      kind: { default: "photo" },
     },
 
     init() {
@@ -45,7 +45,7 @@
       }
 
       this.playPopAnimation(1.12);
-      this.el.sceneEl.emit("gallery:photo-toggle-focus", {cardEl: this.el});
+      this.el.sceneEl.emit("gallery:photo-toggle-focus", { cardEl: this.el });
     },
 
     playPopAnimation(multiplier) {
@@ -108,7 +108,7 @@
   AFRAME.registerComponent("birthday-gallery", {
     init() {
       this.config = window.PARTY_CONFIG;
-      this.introConfig = this.config.intro || {countdownSeconds: 3};
+      this.introConfig = this.config.intro || { countdownSeconds: 3 };
       this.desktopConfig = this.config.desktopPreview || {};
       this.scene = this.el;
       this.camera = document.getElementById("camera");
@@ -130,7 +130,8 @@
       this.countdownTimer = null;
       this.focusedPhotoCard = null;
       this.isDesktopPreview = this.detectDesktopPreviewMode();
-      this.desktopIdleStatus = this.config.ui.desktopStatus || "Desktop preview active.";
+      this.desktopIdleStatus =
+        this.config.ui.desktopStatus || "Desktop preview active.";
       this.hoveredCard = null;
 
       this.handleGroundTap = this.handleGroundTap.bind(this);
@@ -142,8 +143,14 @@
       this.ground.addEventListener("click", this.handleGroundTap);
       this.resetButton.addEventListener("click", this.handleReset);
       this.videoButton.addEventListener("click", this.handleToggleVideos);
-      this.scene.addEventListener("gallery:photo-toggle-focus", this.handlePhotoToggleFocus);
-      this.scene.addEventListener("gallery:video-toggled", this.handleVideoToggled);
+      this.scene.addEventListener(
+        "gallery:photo-toggle-focus",
+        this.handlePhotoToggleFocus,
+      );
+      this.scene.addEventListener(
+        "gallery:video-toggled",
+        this.handleVideoToggled,
+      );
 
       this.updatePrompt(this.config.ui.prompt);
       this.setStatus("Move your phone slowly so floor detection can lock.");
@@ -153,20 +160,26 @@
     },
 
     detectDesktopPreviewMode() {
-      const hasTouchPoints = navigator.maxTouchPoints && navigator.maxTouchPoints > 0;
+      const hasTouchPoints =
+        navigator.maxTouchPoints && navigator.maxTouchPoints > 0;
       const hasTouchEvents = "ontouchstart" in window;
       return !(hasTouchPoints || hasTouchEvents);
     },
 
     setupDesktopPreviewPlacement() {
-      const isAutoPlace = this.isDesktopPreview ? this.desktopConfig.autoPlace : this.config.placement.autoPlace;
-      
+      const isAutoPlace = this.isDesktopPreview
+        ? this.desktopConfig.autoPlace
+        : this.config.placement.autoPlace;
+
       if (!isAutoPlace) {
         return;
       }
 
       if (this.isDesktopPreview) {
-        this.updatePrompt(this.config.ui.desktopPrompt || this.config.ui.prompt, true);
+        this.updatePrompt(
+          this.config.ui.desktopPrompt || this.config.ui.prompt,
+          true,
+        );
         this.setStatus(this.desktopIdleStatus);
       }
 
@@ -176,8 +189,12 @@
         }
 
         const groundY = this.isDesktopPreview
-          ? (Number.isFinite(this.desktopConfig.autoPlaceGroundY) ? this.desktopConfig.autoPlaceGroundY : -0.5)
-          : (Number.isFinite(this.config.placement.autoPlaceGroundY) ? this.config.placement.autoPlaceGroundY : 0);
+          ? Number.isFinite(this.desktopConfig.autoPlaceGroundY)
+            ? this.desktopConfig.autoPlaceGroundY
+            : -0.5
+          : Number.isFinite(this.config.placement.autoPlaceGroundY)
+            ? this.config.placement.autoPlaceGroundY
+            : 0;
         this.placeGallery(groundY);
       };
 
@@ -186,9 +203,13 @@
         return;
       }
 
-      this.scene.addEventListener("loaded", () => {
-        window.setTimeout(placeWhenReady, 180);
-      }, {once: true});
+      this.scene.addEventListener(
+        "loaded",
+        () => {
+          window.setTimeout(placeWhenReady, 180);
+        },
+        { once: true },
+      );
     },
 
     bindDesktopHoverHint(targetEl, hintMessage) {
@@ -224,7 +245,9 @@
         return;
       }
 
-      const baseEmissiveIntensity = Number(frame.dataset.baseEmissiveIntensity || 0.2);
+      const baseEmissiveIntensity = Number(
+        frame.dataset.baseEmissiveIntensity || 0.2,
+      );
       const activeEmissiveIntensity = baseEmissiveIntensity + 0.26;
 
       if (isHovered) {
@@ -267,8 +290,14 @@
       this.ground.removeEventListener("click", this.handleGroundTap);
       this.resetButton.removeEventListener("click", this.handleReset);
       this.videoButton.removeEventListener("click", this.handleToggleVideos);
-      this.scene.removeEventListener("gallery:photo-toggle-focus", this.handlePhotoToggleFocus);
-      this.scene.removeEventListener("gallery:video-toggled", this.handleVideoToggled);
+      this.scene.removeEventListener(
+        "gallery:photo-toggle-focus",
+        this.handlePhotoToggleFocus,
+      );
+      this.scene.removeEventListener(
+        "gallery:video-toggled",
+        this.handleVideoToggled,
+      );
     },
 
     handleGroundTap(event) {
@@ -284,7 +313,10 @@
       ) {
         const mouseEvent = event?.detail?.mouseEvent;
         if (!mouseEvent?.shiftKey) {
-          this.setStatus(this.config.ui.desktopRelocateHint || "Desktop: hold Shift and click ground to reposition layout.");
+          this.setStatus(
+            this.config.ui.desktopRelocateHint ||
+              "Desktop: hold Shift and click ground to reposition layout.",
+          );
           return;
         }
       }
@@ -312,7 +344,7 @@
       this.isRevealing = false;
       this.pauseAllVideos();
       const resetPrompt = this.isDesktopPreview
-        ? (this.config.ui.desktopPrompt || this.config.ui.prompt)
+        ? this.config.ui.desktopPrompt || this.config.ui.prompt
         : this.config.ui.prompt;
       this.updatePrompt(resetPrompt, true);
       this.updateVideoButtonLabel();
@@ -386,7 +418,9 @@
       if (this.focusedPhotoCard === card) {
         this.collapsePhotoCard(card);
         this.focusedPhotoCard = null;
-        this.setStatus(this.config.ui.photoCollapsedMessage || "Photo restored.");
+        this.setStatus(
+          this.config.ui.photoCollapsedMessage || "Photo restored.",
+        );
         return;
       }
 
@@ -402,8 +436,8 @@
 
       this.setStatus(
         isPlaying
-          ? (this.config.ui.videoTapPlayMessage || "Video playing.")
-          : (this.config.ui.videoTapPauseMessage || "Video paused.")
+          ? this.config.ui.videoTapPlayMessage || "Video playing."
+          : this.config.ui.videoTapPauseMessage || "Video paused.",
       );
     },
 
@@ -412,7 +446,8 @@
         .map((id) => document.getElementById(id))
         .filter(Boolean);
 
-      this.allVideosPlaying = videos.length > 0 && videos.every((video) => !video.paused);
+      this.allVideosPlaying =
+        videos.length > 0 && videos.every((video) => !video.paused);
     },
 
     focusPhotoCard(card) {
@@ -476,8 +511,8 @@
           homeZ,
           this.config.animation.floatDistance,
           this.config.animation.floatDurationMs,
-          floatDelay
-        )
+          floatDelay,
+        ),
       );
     },
 
@@ -515,7 +550,10 @@
 
       this.galleryRoot = document.createElement("a-entity");
       this.galleryRoot.setAttribute("id", "galleryRoot");
-      this.galleryRoot.setAttribute("position", `${center.x} ${center.y} ${center.z}`);
+      this.galleryRoot.setAttribute(
+        "position",
+        `${center.x} ${center.y} ${center.z}`,
+      );
       this.galleryRoot.setAttribute("visible", "false");
       this.galleryRoot.setAttribute("scale", "0.84 0.84 0.84");
       this.scene.appendChild(this.galleryRoot);
@@ -538,11 +576,17 @@
       if (!this.galleryRoot) return;
 
       const center = this.getUserCenter(groundY);
-      this.galleryRoot.setAttribute("position", `${center.x} ${center.y} ${center.z}`);
+      this.galleryRoot.setAttribute(
+        "position",
+        `${center.x} ${center.y} ${center.z}`,
+      );
       this.galleryRoot.setAttribute("visible", "false");
       this.galleryRoot.setAttribute("scale", "0.84 0.84 0.84");
       this.updatePrompt(this.config.ui.revealPreparingMessage, true);
-      this.setStatus(this.config.ui.relocatedWithCountdownMessage || this.config.ui.revealInProgressMessage);
+      this.setStatus(
+        this.config.ui.relocatedWithCountdownMessage ||
+          this.config.ui.revealInProgressMessage,
+      );
       this.startRevealSequence();
     },
 
@@ -574,14 +618,18 @@
     },
 
     startRevealSequence() {
-      let remaining = Math.max(1, Math.floor(this.introConfig.countdownSeconds || 3));
+      let remaining = Math.max(
+        1,
+        Math.floor(this.introConfig.countdownSeconds || 3),
+      );
 
       this.stopCountdown();
       this.isRevealing = true;
       this.setRevealOverlayVisible(true);
 
       if (this.countdownLabel) {
-        this.countdownLabel.textContent = this.introConfig.revealLabel || "Get ready...";
+        this.countdownLabel.textContent =
+          this.introConfig.revealLabel || "Get ready...";
       }
 
       if (this.countdownNumber) {
@@ -624,7 +672,8 @@
       }
 
       if (this.countdownLabel) {
-        this.countdownLabel.textContent = this.introConfig.revealDoneLabel || "Gallery live";
+        this.countdownLabel.textContent =
+          this.introConfig.revealDoneLabel || "Gallery live";
       }
 
       window.setTimeout(() => {
@@ -721,8 +770,8 @@
             z,
             this.config.animation.floatDistance,
             this.config.animation.floatDurationMs,
-            index * 90
-          )
+            index * 90,
+          ),
         );
 
         const frame = document.createElement("a-plane");
@@ -754,13 +803,43 @@
 
         const title = document.createElement("a-text");
         title.setAttribute("value", item.title || "");
-        title.setAttribute("position", `0 ${-(layer.itemHeight / 2) - 0.12} 0.02`);
+        title.setAttribute(
+          "position",
+          `0 ${-(layer.itemHeight / 2) - 0.12} 0.02`,
+        );
         title.setAttribute("align", "center");
         title.setAttribute("width", "4");
         title.setAttribute("color", "#fffaf1");
         title.setAttribute("shader", "msdf");
 
-        const photoHoverHint = this.config.ui.desktopHoverPhotoHint || "Photo is clickable. Left-click to expand.";
+        // 動態調整寬高比，讓框架緊貼圖片尺寸
+        const adjustImageAspectRatio = () => {
+          const texture = photo.getObject3D("mesh").material.map;
+          if (texture && texture.image) {
+            const imgWidth = texture.image.width;
+            const imgHeight = texture.image.height;
+            if (imgWidth && imgHeight) {
+              const aspectRatio = imgWidth / imgHeight;
+              const newHeight = layer.itemHeight;
+              const newWidth = newHeight * aspectRatio;
+              photo.setAttribute("width", newWidth);
+              frame.setAttribute("width", newWidth + 0.1);
+              frame.setAttribute("height", newHeight + 0.1);
+              title.setAttribute(
+                "position",
+                `0 ${-(newHeight / 2) - 0.12} 0.02`,
+              );
+            }
+          }
+        };
+
+        // 當材質加載完成時調整寬高比
+        photo.addEventListener("materialtextureloaded", adjustImageAspectRatio);
+        photo.addEventListener("model-loaded", adjustImageAspectRatio);
+
+        const photoHoverHint =
+          this.config.ui.desktopHoverPhotoHint ||
+          "Photo is clickable. Left-click to expand.";
         this.bindDesktopHoverHint(photo, photoHoverHint);
         this.bindDesktopHoverHint(frame, photoHoverHint);
 
@@ -796,8 +875,8 @@
             z,
             this.config.animation.floatDistance * 1.25,
             this.config.animation.floatDurationMs + 400,
-            index * 140
-          )
+            index * 140,
+          ),
         );
 
         const frame = document.createElement("a-plane");
@@ -825,7 +904,34 @@
         const pauseBadge = document.createElement("a-circle");
         pauseBadge.classList.add("pause-badge", "cantap");
         pauseBadge.setAttribute("radius", "0.11");
-        pauseBadge.setAttribute("position", `${(layer.itemWidth / 2) - 0.12} ${-(layer.itemHeight / 2) + 0.12} 0.03`);
+        pauseBadge.setAttribute(
+          "position",
+          `${layer.itemWidth / 2 - 0.12} ${-(layer.itemHeight / 2) + 0.12} 0.03`,
+        );
+
+        // 動態調整影片寬高比，讓框架和按鈕位置一起跟著內容調整
+        const adjustVideoAspectRatio = () => {
+          const videoEl = document.getElementById(this.videoAssetIds[index]);
+          if (videoEl && videoEl.videoWidth && videoEl.videoHeight) {
+            const aspectRatio = videoEl.videoWidth / videoEl.videoHeight;
+            const newHeight = layer.itemHeight;
+            const newWidth = newHeight * aspectRatio;
+            screen.setAttribute("width", newWidth);
+            frame.setAttribute("width", newWidth + 0.1);
+            frame.setAttribute("height", newHeight + 0.1);
+            pauseBadge.setAttribute(
+              "position",
+              `${newWidth / 2 - 0.12} ${-(newHeight / 2) + 0.12} 0.03`,
+            );
+          }
+        };
+
+        screen.addEventListener("video-loaded", adjustVideoAspectRatio);
+        const videoEl = document.getElementById(this.videoAssetIds[index]);
+        if (videoEl) {
+          videoEl.addEventListener("loadedmetadata", adjustVideoAspectRatio);
+          videoEl.addEventListener("canplay", adjustVideoAspectRatio);
+        }
         setEntityMaterial(pauseBadge, {
           color: "#10131a",
           emissive: "#10131a",
@@ -844,13 +950,18 @@
 
         const title = document.createElement("a-text");
         title.setAttribute("value", item.title || "");
-        title.setAttribute("position", `0 ${-(layer.itemHeight / 2) - 0.12} 0.03`);
+        title.setAttribute(
+          "position",
+          `0 ${-(layer.itemHeight / 2) - 0.12} 0.03`,
+        );
         title.setAttribute("align", "center");
         title.setAttribute("width", "4");
         title.setAttribute("color", "#f4fbff");
         title.setAttribute("shader", "msdf");
 
-        const videoHoverHint = this.config.ui.desktopHoverVideoHint || "Video is clickable. Left-click to play or pause.";
+        const videoHoverHint =
+          this.config.ui.desktopHoverVideoHint ||
+          "Video is clickable. Left-click to play or pause.";
         this.bindDesktopHoverHint(screen, videoHoverHint);
         this.bindDesktopHoverHint(frame, videoHoverHint);
 
@@ -865,7 +976,10 @@
 
     addDecorativeRings(root) {
       const lowerRing = document.createElement("a-torus");
-      lowerRing.setAttribute("position", `0 ${this.config.layerOne.height - 0.52} 0`);
+      lowerRing.setAttribute(
+        "position",
+        `0 ${this.config.layerOne.height - 0.52} 0`,
+      );
       lowerRing.setAttribute("rotation", "90 0 0");
       lowerRing.setAttribute("radius", this.config.layerOne.radius + 0.02);
       lowerRing.setAttribute("radius-tubular", 0.01);
@@ -885,7 +999,10 @@
       });
 
       const upperRing = document.createElement("a-torus");
-      upperRing.setAttribute("position", `0 ${this.config.layerTwo.height - 0.46} 0`);
+      upperRing.setAttribute(
+        "position",
+        `0 ${this.config.layerTwo.height - 0.46} 0`,
+      );
       upperRing.setAttribute("rotation", "90 0 0");
       upperRing.setAttribute("radius", this.config.layerTwo.radius + 0.02);
       upperRing.setAttribute("radius-tubular", 0.01);

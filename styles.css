@@ -31,7 +31,11 @@ body::before {
   inset: -20% auto auto -10%;
   width: 320px;
   height: 320px;
-  background: radial-gradient(circle at center, rgba(255, 174, 101, 0.18), rgba(255, 174, 101, 0));
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 174, 101, 0.18),
+    rgba(255, 174, 101, 0)
+  );
   filter: blur(4px);
 }
 
@@ -39,7 +43,11 @@ body::after {
   inset: auto -8% 18% auto;
   width: 290px;
   height: 290px;
-  background: radial-gradient(circle at center, rgba(117, 212, 255, 0.2), rgba(117, 212, 255, 0));
+  background: radial-gradient(
+    circle at center,
+    rgba(117, 212, 255, 0.2),
+    rgba(117, 212, 255, 0)
+  );
   filter: blur(6px);
 }
 
@@ -53,8 +61,16 @@ body::after {
   gap: 10px;
   color: #fff8ee;
   background:
-    radial-gradient(circle at 25% 25%, rgba(255, 167, 98, 0.35), rgba(255, 167, 98, 0)),
-    radial-gradient(circle at 80% 70%, rgba(122, 203, 255, 0.35), rgba(122, 203, 255, 0)),
+    radial-gradient(
+      circle at 25% 25%,
+      rgba(255, 167, 98, 0.35),
+      rgba(255, 167, 98, 0)
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(122, 203, 255, 0.35),
+      rgba(122, 203, 255, 0)
+    ),
     rgba(22, 29, 41, 0.62);
   backdrop-filter: blur(8px);
   transition: opacity 240ms ease;
@@ -83,7 +99,7 @@ body::after {
 }
 
 .reveal-overlay__label {
-  font-size: 14px;
+  font-size: 28px;
   letter-spacing: 0.02em;
   opacity: 0.9;
 }
@@ -100,6 +116,7 @@ body::after {
 }
 
 .hud {
+  display: none;
   position: fixed;
   z-index: 20;
   left: 50%;
@@ -123,14 +140,18 @@ body::after {
   width: 190px;
   height: 190px;
   border-radius: 999px;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0)
+  );
   pointer-events: none;
 }
 
 .hud__badge {
   position: relative;
   z-index: 1;
-  display: inline-block;
+  display: none;
   font-family: "Baloo 2", "Noto Sans TC", sans-serif;
   font-size: 12px;
   font-weight: 700;

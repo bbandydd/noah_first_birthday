@@ -14,62 +14,62 @@
   const photos = [
     {
       title: "Noah 01",
-      src: "assets/photos/generated/photo01.JPG",
+      src: "assets/photos/generated/photo01.png",
       frameColor: framePalette[0],
     },
     {
       title: "Noah 02",
-      src: "assets/photos/generated/photo02.JPG",
+      src: "assets/photos/generated/photo02.png",
       frameColor: framePalette[1],
     },
     {
       title: "Noah 03",
-      src: "assets/photos/generated/photo03.JPG",
+      src: "assets/photos/generated/photo03.png",
       frameColor: framePalette[2],
     },
     {
       title: "Noah 04",
-      src: "assets/photos/generated/photo04.svg",
+      src: "assets/photos/generated/photo04.png",
       frameColor: framePalette[3],
     },
     {
       title: "Noah 05",
-      src: "assets/photos/generated/photo05.svg",
+      src: "assets/photos/generated/photo05.png",
       frameColor: framePalette[4],
     },
     {
       title: "Noah 06",
-      src: "assets/photos/generated/photo06.svg",
+      src: "assets/photos/generated/photo06.png",
       frameColor: framePalette[5],
     },
     {
       title: "Noah 07",
-      src: "assets/photos/generated/photo07.svg",
+      src: "assets/photos/generated/photo07.png",
       frameColor: framePalette[0],
     },
     {
       title: "Noah 08",
-      src: "assets/photos/generated/photo08.svg",
+      src: "assets/photos/generated/photo08.png",
       frameColor: framePalette[1],
     },
     {
       title: "Noah 09",
-      src: "assets/photos/generated/photo09.svg",
+      src: "assets/photos/generated/photo09.png",
       frameColor: framePalette[2],
     },
     {
       title: "Noah 10",
-      src: "assets/photos/generated/photo10.svg",
+      src: "assets/photos/generated/photo10.png",
       frameColor: framePalette[3],
     },
     {
       title: "Noah 11",
-      src: "assets/photos/generated/photo11.svg",
+      src: "assets/photos/generated/photo11.png",
       frameColor: framePalette[4],
     },
     {
       title: "Noah 12",
-      src: "assets/photos/generated/photo12.svg",
+      src: "assets/photos/generated/photo12.png",
       frameColor: framePalette[5],
     },
   ];
@@ -117,7 +117,7 @@
 
     layerOne: {
       radius: 3.35,
-      height: 1.85,
+      height: 1.55,
       itemWidth: 1.02,
       itemHeight: 0.68,
       spinOffsetDeg: 8,
@@ -125,7 +125,7 @@
 
     layerTwo: {
       radius: 1.45,
-      height: 2.85,
+      height: 2.55,
       itemWidth: 0.96,
       itemHeight: 0.56,
       spinOffsetDeg: 45,
@@ -133,7 +133,7 @@
 
     intro: {
       countdownSeconds: 3,
-      revealLabel: "Ready to reveal your memory sky...",
+      revealLabel: "宥辰週歲趴",
       revealDoneLabel: "Happy Birthday Noah!",
     },
 
