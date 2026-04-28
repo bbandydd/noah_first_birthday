@@ -159,21 +159,25 @@
     },
 
     setupDesktopPreviewPlacement() {
-      if (!this.isDesktopPreview || !this.desktopConfig.autoPlace) {
+      const isAutoPlace = this.isDesktopPreview ? this.desktopConfig.autoPlace : this.config.placement.autoPlace;
+      
+      if (!isAutoPlace) {
         return;
       }
 
-      this.updatePrompt(this.config.ui.desktopPrompt || this.config.ui.prompt, true);
-      this.setStatus(this.desktopIdleStatus);
+      if (this.isDesktopPreview) {
+        this.updatePrompt(this.config.ui.desktopPrompt || this.config.ui.prompt, true);
+        this.setStatus(this.desktopIdleStatus);
+      }
 
       const placeWhenReady = () => {
         if (this.hasPlacedGallery || this.isRevealing) {
           return;
         }
 
-        const groundY = Number.isFinite(this.desktopConfig.autoPlaceGroundY)
-          ? this.desktopConfig.autoPlaceGroundY
-          : -0.5;
+        const groundY = this.isDesktopPreview
+          ? (Number.isFinite(this.desktopConfig.autoPlaceGroundY) ? this.desktopConfig.autoPlaceGroundY : -0.5)
+          : (Number.isFinite(this.config.placement.autoPlaceGroundY) ? this.config.placement.autoPlaceGroundY : 0);
         this.placeGallery(groundY);
       };
 
@@ -748,6 +752,25 @@
           transparent: true,
         });
 
+        // 動態調整寬高比，保持圖片不失真
+        const adjustImageAspectRatio = () => {
+          const texture = photo.getObject3D("mesh").material.map;
+          if (texture && texture.image) {
+            const imgWidth = texture.image.width;
+            const imgHeight = texture.image.height;
+            if (imgWidth && imgHeight) {
+              const aspectRatio = imgWidth / imgHeight;
+              const newHeight = layer.itemHeight;
+              const newWidth = newHeight * aspectRatio;
+              photo.setAttribute("width", newWidth);
+            }
+          }
+        };
+
+        // 當材質加載完成時調整寬高比
+        photo.addEventListener("materialtextureloaded", adjustImageAspectRatio);
+        photo.addEventListener("model-loaded", adjustImageAspectRatio);
+
         const title = document.createElement("a-text");
         title.setAttribute("value", item.title || "");
         title.setAttribute("position", `0 ${-(layer.itemHeight / 2) - 0.12} 0.02`);
@@ -817,6 +840,23 @@
         screen.setAttribute("src", `#${this.videoAssetIds[index]}`);
         screen.setAttribute("width", layer.itemWidth);
         screen.setAttribute("height", layer.itemHeight);
+
+        // 動態調整影片寬高比，保持影片不失真
+        const adjustVideoAspectRatio = () => {
+          const videoEl = document.getElementById(this.videoAssetIds[index]);
+          if (videoEl && videoEl.videoWidth && videoEl.videoHeight) {
+            const aspectRatio = videoEl.videoWidth / videoEl.videoHeight;
+            const newHeight = layer.itemHeight;
+            const newWidth = newHeight * aspectRatio;
+            screen.setAttribute("width", newWidth);
+          }
+        };
+
+        screen.addEventListener("video-loaded", adjustVideoAspectRatio);
+        const videoEl = document.getElementById(this.videoAssetIds[index]);
+        if (videoEl) {
+          videoEl.addEventListener("canplay", adjustVideoAspectRatio);
+        }
 
         const pauseBadge = document.createElement("a-circle");
         pauseBadge.classList.add("pause-badge", "cantap");

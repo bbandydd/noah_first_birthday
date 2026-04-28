@@ -1,95 +1,118 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Noah First Birthday AR</title>
-  <meta name="description" content="Two-layer birthday AR gallery with photos and videos for iPhone WebAR." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Noto+Sans+TC:wght@400;600;700&display=swap" rel="stylesheet" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Noah First Birthday AR</title>
+    <meta
+      name="description"
+      content="Two-layer birthday AR gallery with photos and videos for iPhone WebAR."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Noto+Sans+TC:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css" />
 
-  <script crossorigin="anonymous" src="./external/scripts/8frame-1.5.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@8thwall/xrextras@1/dist/xrextras.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@8thwall/landing-page@1/dist/landing-page.js" crossorigin="anonymous"></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js"
-    crossorigin="anonymous"
-    async="true"
-    data-preload-chunks="slam"></script>
-</head>
+    <script
+      crossorigin="anonymous"
+      src="./external/scripts/8frame-1.5.0.min.js"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@8thwall/xrextras@1/dist/xrextras.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@8thwall/landing-page@1/dist/landing-page.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js"
+      crossorigin="anonymous"
+      async="true"
+      data-preload-chunks="slam"
+    ></script>
+  </head>
 
-<body>
-  <script src="./src/config.js?v=20260428-7"></script>
-  <script src="./src/experience.js?v=20260428-7"></script>
+  <body>
+    <script src="./src/config.js?v=20260428-7"></script>
+    <script src="./src/experience.js?v=20260428-7"></script>
 
-  <div id="revealOverlay" class="reveal-overlay reveal-overlay--hidden">
-    <div class="reveal-overlay__title">Noah 1st Birthday</div>
-    <div id="countdownNumber" class="reveal-overlay__count">3</div>
-    <div id="countdownLabel" class="reveal-overlay__label">Ready to reveal your memory sky...</div>
-  </div>
-
-  <div class="hud">
-    <div class="hud__badge">Noah Memory Orbit</div>
-    <div id="promptText" class="hud__prompt">Scan floor, then tap the ground to place your gallery.</div>
-    <div id="statusText" class="hud__status">Loading AR scene...</div>
-    <div class="hud__controls">
-      <button id="resetBtn" type="button">Re-place Layout</button>
-      <button id="videoBtn" type="button">Play Party Videos</button>
+    <div id="revealOverlay" class="reveal-overlay reveal-overlay--hidden">
+      <div class="reveal-overlay__title">Noah 1st Birthday</div>
+      <div id="countdownNumber" class="reveal-overlay__count">3</div>
+      <div id="countdownLabel" class="reveal-overlay__label">
+        Ready to reveal your memory sky...
+      </div>
     </div>
-  </div>
 
-  <a-scene
-    id="scene"
-    birthday-gallery
-    landing-page
-    xrextras-loading
-    xrextras-runtime-error
-    renderer="colorManagement: true"
-    xrweb="
+    <div class="hud">
+      <div class="hud__badge">Noah Memory Orbit</div>
+      <div id="promptText" class="hud__prompt">
+        Scan floor, then tap the ground to place your gallery.
+      </div>
+      <div id="statusText" class="hud__status">Loading AR scene...</div>
+      <div class="hud__controls">
+        <button id="resetBtn" type="button">Re-place Layout</button>
+        <button id="videoBtn" type="button">Play Party Videos</button>
+      </div>
+    </div>
+
+    <a-scene
+      id="scene"
+      birthday-gallery
+      landing-page
+      xrextras-loading
+      xrextras-runtime-error
+      renderer="colorManagement: true"
+      xrweb="
       allowedDevices: any;
       defaultEnvironmentFogIntensity: 0.42;
       defaultEnvironmentFloorColor: #efe8d8;
       defaultEnvironmentSkyBottomColor: #f2e8d3;
       defaultEnvironmentSkyTopColor: #95c8ff;
-      defaultEnvironmentSkyGradientStrength: 0.62;">
+      defaultEnvironmentSkyGradientStrength: 0.62;"
+    >
+      <a-assets id="mediaAssets">
+        <img id="groundTex" src="assets/photos/placeholder.svg" />
+      </a-assets>
 
-    <a-assets id="mediaAssets">
-      <img id="groundTex" src="assets/photos/placeholder.svg" />
-    </a-assets>
+      <a-camera
+        id="camera"
+        position="0 1.6 0"
+        raycaster="objects: .cantap"
+        cursor="fuse: false; rayOrigin: mouse"
+      >
+      </a-camera>
 
-    <a-camera
-      id="camera"
-      position="0 1.6 0"
-      raycaster="objects: .cantap"
-      cursor="fuse: false; rayOrigin: mouse">
-    </a-camera>
-
-    <a-entity
-      light="
+      <a-entity
+        light="
         type: directional;
         intensity: 0.72;
         castShadow: true;
         shadowMapHeight: 2048;
         shadowMapWidth: 2048;
         target: #camera"
-      xrextras-attach="target: camera; offset: 4 8 3"
-      position="1 4 2"
-      shadow>
-    </a-entity>
+        xrextras-attach="target: camera; offset: 4 8 3"
+        position="1 4 2"
+        shadow
+      >
+      </a-entity>
 
-    <a-light type="ambient" intensity="0.65"></a-light>
+      <a-light type="ambient" intensity="0.65"></a-light>
 
-    <a-box
-      id="ground"
-      class="cantap"
-      scale="200 1 200"
-      position="0 -0.5 0"
-      material="shader: shadow; transparent: true; opacity: 0.35"
-      shadow>
-    </a-box>
-  </a-scene>
-</body>
+      <a-box
+        id="ground"
+        class="cantap"
+        scale="200 1 200"
+        position="0 -0.5 0"
+        material="shader: shadow; transparent: true; opacity: 0.35"
+        shadow
+      >
+      </a-box>
+    </a-scene>
+  </body>
 </html>
