@@ -140,7 +140,7 @@
       this.handlePhotoToggleFocus = this.handlePhotoToggleFocus.bind(this);
       this.handleVideoToggled = this.handleVideoToggled.bind(this);
 
-      this.ground.addEventListener("click", this.handleGroundTap);
+      // this.ground.addEventListener("click", this.handleGroundTap);
       this.resetButton.addEventListener("click", this.handleReset);
       this.videoButton.addEventListener("click", this.handleToggleVideos);
       this.scene.addEventListener(
@@ -287,7 +287,7 @@
 
     remove() {
       this.stopCountdown();
-      this.ground.removeEventListener("click", this.handleGroundTap);
+      // this.ground.removeEventListener("click", this.handleGroundTap);
       this.resetButton.removeEventListener("click", this.handleReset);
       this.videoButton.removeEventListener("click", this.handleToggleVideos);
       this.scene.removeEventListener(
