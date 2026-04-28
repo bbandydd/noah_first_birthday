@@ -110,7 +110,7 @@
   window.PARTY_CONFIG = {
     placement: {
       centerYOffset: 0,
-      allowRelocateOnGroundTap: true,
+      allowRelocateOnGroundTap: false,
       autoPlace: true,
       autoPlaceGroundY: 0,
     },
