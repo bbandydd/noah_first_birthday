@@ -159,6 +159,7 @@ body::after {
   font-size: 12px;
   color: var(--status);
   min-height: 1.2em;
+  display: none;
 }
 
 .hud__controls {
@@ -168,6 +169,7 @@ body::after {
   grid-template-columns: 1fr 1fr;
   gap: 8px;
   margin-top: 10px;
+  display: none;
 }
 
 button {
