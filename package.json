@@ -4,7 +4,8 @@
   "description": "This project creates a two-layer party layout in WebAR for iPhone:",
   "private": true,
   "scripts": {
-    "serve": "python3 -m http.server 5173",
+    "compress-assets": "node scripts/compress-assets.mjs",
+    "serve": "npx http-server . -p 5173 -c-1",
     "deploy": "gh-pages -d .",
     "deploy:dry-run": "gh-pages -d . --no-push"
   },
