@@ -81,6 +81,69 @@ body::after {
   pointer-events: none;
 }
 
+.celebration-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.celebration-overlay__spark,
+.celebration-overlay__streamer {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.celebration-overlay__spark {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--spark-color, #ffd166);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--spark-color, #ffd166) 70%, white);
+  animation: overlaySparkBurst 2000ms ease-out forwards;
+}
+
+.celebration-overlay__spark--video {
+  border-radius: 999px;
+}
+
+.celebration-overlay__spark--button {
+  width: 16px;
+  height: 16px;
+  border-radius: 0;
+  clip-path: polygon(50% 0%, 61% 37%, 100% 50%, 61% 63%, 50% 100%, 39% 63%, 0% 50%, 39% 37%);
+}
+
+.celebration-overlay__streamer {
+  width: 8px;
+  height: 72px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--streamer-color, #ff8fab) 85%, white),
+      var(--streamer-color, #ff8fab)
+    );
+  transform-origin: top center;
+  animation: overlayStreamerDrop 2300ms cubic-bezier(0.14, 0.78, 0.24, 1) forwards;
+  opacity: 0.95;
+}
+
+.celebration-overlay__pulse {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  margin-top: -9px;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--pulse-color, #ffd166) 80%, white);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--pulse-color, #ffd166) 60%, white);
+  animation: overlayPulse 1800ms ease-out forwards;
+}
+
 .reveal-overlay__title {
   font-family: "Baloo 2", "Noto Sans TC", sans-serif;
   font-weight: 700;
@@ -112,6 +175,50 @@ body::after {
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes overlaySparkBurst {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.2);
+  }
+  14% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--spark-x), var(--spark-y), 0)
+      rotate(var(--spark-rotate)) scale(var(--spark-scale));
+  }
+}
+
+@keyframes overlayStreamerDrop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) scaleY(0.2);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--streamer-x), var(--streamer-y), 0)
+      rotate(var(--streamer-rotate)) scaleY(1);
+  }
+}
+
+@keyframes overlayPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  16% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(9.5);
   }
 }
 
